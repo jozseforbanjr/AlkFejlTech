@@ -12,6 +12,8 @@ public class RunnerEntity {
     private String runnerName;
     private long averagePace;
 
+    private short age; //feladat 1, +getter/setter
+
     // a LapTime tablaban a RunnerID fogja a kapcsolatot létrehozni, nem a Runner tablaba menti a korido adatokat
     @OneToMany(mappedBy = "runner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LapTimeEntity> laptimes = new ArrayList<>();
@@ -48,4 +50,8 @@ public class RunnerEntity {
     public List<LapTimeEntity> getLaptimes() {
         return laptimes;
     }
+
+    public short getAge() { return age; }
+
+    public void setAge(int age) { this.age = (short) age; }
 }
