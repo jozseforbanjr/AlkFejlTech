@@ -74,4 +74,24 @@ public class RunnerRestController {
             this.lapTimeSeconds = lapTimeSeconds;
         }
     }
+
+    // 4. feladat REST lekerdezesi vegpont: atlageletkor
+    @GetMapping("/averageage")
+    public double getAverageAge() {
+        List<RunnerEntity> runnerEntityList = runnerRepository.findAll(); //Entity lista -> foreach
+        long sumAge       = 0;
+        double averageage = 0;
+        int runnerCount   = 0;
+        //runnerEntityList.forEach((runner) -> {
+        for (RunnerEntity runner: runnerEntityList) {
+            if (runner != null) {
+                sumAge += (long) runner.getAge();
+                runnerCount += 1;
+            }
+        };
+
+        averageage = (double) sumAge / runnerCount;
+        return averageage;
+    }
+
 }
