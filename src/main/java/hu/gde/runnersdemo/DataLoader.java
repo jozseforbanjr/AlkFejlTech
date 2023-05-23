@@ -3,7 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-
+//az alapertelmezett (init) adatok betoltese inditaskor
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -35,7 +35,7 @@ public class DataLoader implements CommandLineRunner {
         runnerEntity.getLaptimes().add(laptime1);
         runnerEntity.getLaptimes().add(laptime2);
 
-        runnerRepository.save(runnerEntity);
+        runnerRepository.save(runnerEntity); //Elso futo, eddigi 2 futokor adatainak elmentese
 
         RunnerEntity runnerEntity2 = new RunnerEntity();
         runnerEntity2.setRunnerName("Zsuzsi");

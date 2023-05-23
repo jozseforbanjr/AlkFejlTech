@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-
+// a webrol (HTTP protokollal) beerkezo kereseket kezeli
 @Controller
 public class RunnerController {
 
@@ -17,7 +17,7 @@ public class RunnerController {
     private RunnerRepository runnerRepository;
     @Autowired
     private LapTimeRepository lapTimeRepository;
-    @GetMapping("/runners")
+    @GetMapping("/runners") //minden runner
     public String getAllRunners(Model model) {
         List<RunnerEntity> runners = runnerRepository.findAll();
         model.addAttribute("runners", runners);
@@ -30,6 +30,7 @@ public class RunnerController {
         RunnerService runnerService = new RunnerService(runnerRepository);
         if (runner != null) {
             model.addAttribute("runner", runner);
+            //MVC modell rendje miatt kulon van az uzleti logika (szamolas) -> runnerService
             double averageLaptime = runnerService.getAverageLaptime(runner.getRunnerId());
             model.addAttribute("averageLaptime", averageLaptime);
             return "runner";

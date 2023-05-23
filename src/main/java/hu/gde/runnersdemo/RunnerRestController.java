@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/v1/runner")
+//standard REST vegpontok definialasa, amin keresztul lehet elerni az adatokat
+@RestController //automatikusan dolgozza fel a json fajlokat
+@RequestMapping("/api/v1/runner") //az api/v1/runner az alapertelmezett URL a REST kommunikaciohoz
 public class RunnerRestController {
 
     @Autowired
@@ -21,7 +22,7 @@ public class RunnerRestController {
         this.lapTimeRepository = lapTimeRepository;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") //konkret runner-re lehet rakerdezni (pl. /localhost:8080/api/v1/runner/1)
     public RunnerEntity getRunner(@PathVariable Long id) {
         return runnerRepository.findById(id).orElse(null);
     }
@@ -42,12 +43,13 @@ public class RunnerRestController {
         }
     }
 
-    @GetMapping("")
+    @GetMapping("") //ha nincs megadva semmi a ...:8080/api/v1/ utan az URLben, akkor
+    // entitasokbol allo listat general, majd REST controller leven JSON-t ad vissza
     public List<RunnerEntity> getAllRunners() {
         return runnerRepository.findAll();
     }
 
-    @PostMapping("/{id}/addlaptime")
+    @PostMapping("/{id}/addlaptime") //POST, adatbevitel, JSON alapon
     public ResponseEntity addLaptime(@PathVariable Long id, @RequestBody LapTimeRequest lapTimeRequest) {
         RunnerEntity runner = runnerRepository.findById(id).orElse(null);
         if (runner != null) {

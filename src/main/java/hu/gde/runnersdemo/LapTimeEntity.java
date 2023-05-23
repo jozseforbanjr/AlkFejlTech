@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "laptimes")
+@Table(name = "laptimes") //H2 DB tabla neve
 public class LapTimeEntity {
 
     @Id
@@ -12,7 +12,7 @@ public class LapTimeEntity {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne  //DB kapcsolat 1:N a Runner es a Laptime kozott
     @JoinColumn(nullable = false)
     private RunnerEntity runner;
 

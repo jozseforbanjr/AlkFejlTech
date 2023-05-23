@@ -12,9 +12,11 @@ public class RunnerEntity {
     private String runnerName;
     private long averagePace;
 
+    // a LapTime tablaban a RunnerID fogja a kapcsolatot létrehozni, nem a Runner tablaba menti a korido adatokat
     @OneToMany(mappedBy = "runner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LapTimeEntity> laptimes = new ArrayList<>();
-
+    //cascade: ha van olyan RunnerEntity,
+    // amit meg nem hozott letre/mentett DB-be, akkor tegye meg automatikusan (az adatokkal egyutt)
 
     public RunnerEntity() {
     }
