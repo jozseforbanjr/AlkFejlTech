@@ -20,6 +20,7 @@ public class DataLoader implements CommandLineRunner {
         RunnerEntity runnerEntity = new RunnerEntity();
         runnerEntity.setRunnerName("Tomi");
         runnerEntity.setAveragePace(310);
+        runnerEntity.setAge(45);
 
         // create default laptime entities and add them to the runner entity
         LapTimeEntity laptime1 = new LapTimeEntity();
@@ -40,6 +41,7 @@ public class DataLoader implements CommandLineRunner {
         RunnerEntity runnerEntity2 = new RunnerEntity();
         runnerEntity2.setRunnerName("Zsuzsi");
         runnerEntity2.setAveragePace(290);
+        runnerEntity2.setAge(28);
 
         // create default laptime entities and add them to the runner entity
         LapTimeEntity laptime3 = new LapTimeEntity();
