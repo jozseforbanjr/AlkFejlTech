@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.text.DecimalFormat;
 import java.util.List;
 // a webrol (HTTP protokollal) beerkezo kereseket kezeli
 @Controller
@@ -21,6 +22,17 @@ public class RunnerController {
     public String getAllRunners(Model model) {
         List<RunnerEntity> runners = runnerRepository.findAll();
         model.addAttribute("runners", runners);
+        // F6.: atlageletkor atlageletkor kiiratas a /runners oldalon
+        // (kod duplikacio: a RunnerRestController-belivel)
+        int count = 0;
+        double sumAge2 = 0;
+        for (int i = 0; i < runners.size(); i++) {
+            sumAge2 += runners.get(i).getAge();
+            count += 1;
+        }
+        String averageAge = new DecimalFormat("#.0#").format(sumAge2 / count );
+        model.addAttribute("averageAge", averageAge);
+
         return "runners";
     }
 
@@ -54,6 +66,7 @@ public class RunnerController {
             return "error";
         }
     }
+
     @PostMapping("/runner/{id}/addlaptime")
     public String addLaptime(@PathVariable Long id, @ModelAttribute LapTimeEntity laptime) {
         RunnerEntity runner = runnerRepository.findById(id).orElse(null);
