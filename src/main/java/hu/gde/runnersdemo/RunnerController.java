@@ -18,6 +18,9 @@ public class RunnerController {
     private RunnerRepository runnerRepository;
     @Autowired
     private LapTimeRepository lapTimeRepository;
+    //F9.: cipo tipus megjelenitese az egyes futoknal "/runner/{id}" oldalon
+    @Autowired
+    private ShoeRepository shoeRepository;
     @GetMapping("/runners") //minden runner
     public String getAllRunners(Model model) {
         List<RunnerEntity> runners = runnerRepository.findAll();
@@ -40,11 +43,16 @@ public class RunnerController {
     public String getRunnerById(@PathVariable Long id, Model model) {
         RunnerEntity runner = runnerRepository.findById(id).orElse(null);
         RunnerService runnerService = new RunnerService(runnerRepository);
+        ShoeEntity shoe = shoeRepository.findById(id).orElse(null);
         if (runner != null) {
             model.addAttribute("runner", runner);
             //MVC modell rendje miatt kulon van az uzleti logika (szamolas) -> runnerService
             double averageLaptime = runnerService.getAverageLaptime(runner.getRunnerId());
             model.addAttribute("averageLaptime", averageLaptime);
+
+            String shoeName = shoe.getshoeName();
+            model.addAttribute("shoeName", shoeName);
+
             return "runner";
         } else {
             // handle error when runner is not found
