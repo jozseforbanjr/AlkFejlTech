@@ -8,19 +8,36 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements CommandLineRunner {
 
     private final RunnerRepository runnerRepository;
+    //F.7: Shoe repository feltoltes
+    private final ShoeRepository shoeRepository;
 
     @Autowired
-    public DataLoader(RunnerRepository runnerRepository) {
+    public DataLoader(RunnerRepository runnerRepository, ShoeRepository shoeRepository) {
         this.runnerRepository = runnerRepository;
+        this.shoeRepository = shoeRepository;
     }
 
     @Override
     public void run(String... args) {
+        //shoentity
+        ShoeEntity shoe1 = new ShoeEntity();
+        shoe1.setshoeName("Nike Air J20");
+        shoeRepository.save(shoe1);
+
+        ShoeEntity shoe2 = new ShoeEntity();
+        shoe2.setshoeName("Adidas ProRun 2023");
+        shoeRepository.save(shoe2);
+
+        ShoeEntity shoe3 = new ShoeEntity();
+        shoe3.setshoeName("Tisza FutniJo Allterrain");
+        shoeRepository.save(shoe3);
+
         // create default runner entity
         RunnerEntity runnerEntity = new RunnerEntity();
         runnerEntity.setRunnerName("Tomi");
         runnerEntity.setAveragePace(310);
         runnerEntity.setAge(45);
+        runnerEntity.setShoe(shoe1);
 
         // create default laptime entities and add them to the runner entity
         LapTimeEntity laptime1 = new LapTimeEntity();
@@ -42,6 +59,7 @@ public class DataLoader implements CommandLineRunner {
         runnerEntity2.setRunnerName("Zsuzsi");
         runnerEntity2.setAveragePace(290);
         runnerEntity2.setAge(28);
+        runnerEntity2.setShoe(shoe2);
 
         // create default laptime entities and add them to the runner entity
         LapTimeEntity laptime3 = new LapTimeEntity();
@@ -64,6 +82,7 @@ public class DataLoader implements CommandLineRunner {
         runnerEntity3.setRunnerName("Marcsi");
         runnerEntity3.setAveragePace(292);
         runnerEntity3.setAge(24);
+        runnerEntity3.setShoe(shoe3);
 
         // create default laptime entities and add them to the runner entity
         LapTimeEntity laptime5 = new LapTimeEntity();

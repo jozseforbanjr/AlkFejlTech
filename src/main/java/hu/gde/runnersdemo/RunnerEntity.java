@@ -20,6 +20,18 @@ public class RunnerEntity {
     //cascade: ha van olyan RunnerEntity,
     // amit meg nem hozott letre/mentett DB-be, akkor tegye meg automatikusan (az adatokkal egyutt)
 
+    // F7.: Shoe entitas osszekapcsolasa a Runner entitassal
+    @ManyToOne
+    private ShoeEntity shoe;
+
+    public ShoeEntity getShoe() {
+        return shoe;
+    }
+
+    public void setShoe(ShoeEntity shoe) {
+        this.shoe = shoe;
+    }
+
     public RunnerEntity() {
     }
 
