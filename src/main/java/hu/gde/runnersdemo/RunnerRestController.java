@@ -15,11 +15,16 @@ public class RunnerRestController {
     @Autowired
     private LapTimeRepository lapTimeRepository;
     private RunnerRepository runnerRepository;
+    private ShoeRepository shoeRepository;
 
     @Autowired
-    public RunnerRestController(RunnerRepository runnerRepository, LapTimeRepository lapTimeRepository) {
+    public RunnerRestController(RunnerRepository runnerRepository,
+                                LapTimeRepository lapTimeRepository,
+                                ShoeRepository shoeRepository)
+    {
         this.runnerRepository = runnerRepository;
         this.lapTimeRepository = lapTimeRepository;
+        this.shoeRepository = shoeRepository;
     }
 
     @GetMapping("/{id}") //konkret runner-re lehet rakerdezni (pl. /localhost:8080/api/v1/runner/1)
@@ -93,5 +98,31 @@ public class RunnerRestController {
         averageage = (double) sumAge / runnerCount;
         return averageage;
     }
+    // F10.: REST vegpont: cipo tipus modositashoz
+    @PostMapping("/{id}/setshoetype")
+    public ResponseEntity setShoeType(@PathVariable Long id, @RequestBody ShoeTypeRequest shoeTypeRequest) {
+        // a kod nem tartalmazza a Runner.Id <-> Shoe.Id kapcsolatot!
+        // Az adatbetoltes logikaja (Runner.Id = Shoe.Id) alapjan azonban OK
+        RunnerEntity runner = runnerRepository.findById(id).orElse(null);
+        ShoeEntity shoe = shoeRepository.findById(shoeTypeRequest.getShoeId()).orElse(null);
+        if (runner != null && shoe != null) {
+            //nem kell uj elem, csak feluliras
+            runner.setShoe(shoe);
+            runnerRepository.save(runner);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Runner with ID " + id + " not found");
+        }
+    }
 
+    public static class ShoeTypeRequest {
+
+        private long shoeId;
+
+        public long getShoeId() {
+            return shoeId;
+        }
+
+        public void setShoeId(long shoeId) { this.setShoeId(shoeId); } //this.shoeID = shoeID helyett
+    }
 }
